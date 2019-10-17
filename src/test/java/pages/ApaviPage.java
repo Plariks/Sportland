@@ -43,7 +43,6 @@ public class ApaviPage {
 
     public void finBrandItems(String brandItems) throws InterruptedException {
         baseFunc.waitePageLoader();
-//        Thread.sleep(5);
         brandItems = brandItems.toUpperCase();
         baseFunc.waitJsExecution(ITEM_AMOUNT_ON_PAGE);
         List<WebElement> checkingBrandNames = baseFunc.getAllElements(ITEM_AMOUNT_ON_PAGE);
@@ -71,42 +70,25 @@ public class ApaviPage {
 //        fw.close();
 //    }
 
-//    public void listFindAllInfo() {
-//        List<WebElement> information = baseFunc.getAllElements(PRODUCT_INFORMATION);
-//        for (int i = 0; i < information.size(); i++) {
-//            List<WebElement>
-//
-//        }
-//    }
-
-
 
     public void removeEuroAndCompare() throws IOException {
-        List<WebElement> allMoneys = baseFunc.getAllElements(COST_WITH_SALE);
-        File file = new File("AllInfoForBoots.txt");
-        FileWriter fw = new FileWriter(file);
-        for (int i = 0; i < allMoneys.size(); i++) {
-            String withEur = allMoneys.get(i).getText();
-            String withoutEur = withEur.replace("€", "");
-            cleanEur = Double.parseDouble(withoutEur);
-            if (cleanEur <= 60) {
+        List<WebElement> allInfo = baseFunc.getAllElements(PRODUCT_INFORMATION);
+        for (int i = 0; i < allInfo.size(); i++) {
+            List<WebElement> allMoneys = baseFunc.getAllElements(COST_WITH_SALE);
+            File file = new File("AllInfoForBoots.txt");
+            FileWriter fw = new FileWriter(file);
+            for (i = 0; i < allMoneys.size(); i++) {
+                String withEur = allMoneys.get(i).getText();
+                String withoutEur = withEur.replace("€", "");
+                cleanEur = Double.parseDouble(withoutEur);
+                if (cleanEur <= 50) {
 
-                    fw.write(cleanEur + "\r\n");
-            } else {continue;}
-        } fw.close();
+                    fw.write(allInfo.get(i).getText() + "\r\n");
+                } else {
+                    continue;
+                }
+            }
+            fw.close();
+        }
     }
-
-//    public void clickOnNeedeFilter(String filteredItemName) {
-//        baseFunc.waitForJsAgain();
-//        List<WebElement> filterClick = baseFunc.getAllElements(FILTER_NAMES);
-//        for (int i = 0; i < filterClick.size(); i++) {
-//            if (!filterClick.get(i).getText().equals(filteredItemName)) {
-//                continue;
-//            } else {
-//                filterClick.get(i).click();
-//                baseFunc.waitForJsAgain();
-//                break;
-//            }
-//        }
-//    }
 }

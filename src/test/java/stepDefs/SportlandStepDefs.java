@@ -67,9 +67,4 @@ public class SportlandStepDefs {
     public void save_info_in_text() throws IOException {
         apaviPage.removeEuroAndCompare();
     }
-
-//    @Then("select filters: {string}")
-//    public void click_on_filter(String filterName) {
-//        apaviPage.clickOnNeedeFilter(filterName);
-//    }
 }

@@ -26,7 +26,6 @@ public class Helper {
 
                 if (filters.get(i).getText().contains(filterNames.get(j))) {
                     filters.get(i).click();
-//                    baseFunc.waitJsExecution(FILTER_NAMES);
                     TimeUnit.SECONDS.sleep(4);
                     filters = baseFunc.getAllElements(FILTER_NAMES);
 
