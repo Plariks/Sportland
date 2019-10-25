@@ -1,6 +1,7 @@
 package pages;
 
 import baseFunc.BaseFunc;
+import org.json.JSONArray;
 import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -8,8 +9,12 @@ import org.openqa.selenium.WebElement;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+
+import org.json.JSONObject;
 
 public class ApaviPage {
 
@@ -18,6 +23,8 @@ public class ApaviPage {
 
     private Double cleanEur;
 
+    private File file;
+    private FileWriter fw;
 
     private final By DROP_MENU_FIRST_FOR_SORTING = By.xpath("//div/fieldset/div/select");
     private final By SORTING_BY_CATEGORY = By.xpath("//div/fieldset/div/select/option");
@@ -25,6 +32,10 @@ public class ApaviPage {
     private final By ITEM_AMOUNT_ON_PAGE = By.xpath("//p[@class='spodb-product-card__title']");
     private final By COST_WITH_SALE = By.xpath("//div/p[@class='spodb-product-card__new-price']");
     private final By PRODUCT_INFORMATION = By.xpath(".//a[@class = 'spodb-product-card']");
+
+    private List<WebElement> allMoneys;
+    private List<WebElement> allInfo;
+
 
     public ApaviPage(BaseFunc baseFunc) {
         this.baseFunc = baseFunc;
@@ -72,11 +83,11 @@ public class ApaviPage {
 
 
     public void removeEuroAndCompare() throws IOException {
-        List<WebElement> allInfo = baseFunc.getAllElements(PRODUCT_INFORMATION);
+        allInfo = baseFunc.getAllElements(PRODUCT_INFORMATION);
         for (int i = 0; i < allInfo.size(); i++) {
-            List<WebElement> allMoneys = baseFunc.getAllElements(COST_WITH_SALE);
-            File file = new File("AllInfoForBoots.txt");
-            FileWriter fw = new FileWriter(file);
+            allMoneys = baseFunc.getAllElements(COST_WITH_SALE);
+            file = new File("AllInfoForBoots.txt");
+            fw = new FileWriter(file);
             for (i = 0; i < allMoneys.size(); i++) {
                 String withEur = allMoneys.get(i).getText();
                 String withoutEur = withEur.replace("€", "");
@@ -84,11 +95,22 @@ public class ApaviPage {
                 if (cleanEur <= 50) {
 
                     fw.write(allInfo.get(i).getText() + "\r\n");
-                } else {
-                    continue;
                 }
             }
             fw.close();
         }
+    }
+
+    public void writeJsonSimpleDemo() throws Exception {
+        JSONObject objectOnce = new JSONObject();
+        JSONArray arrayOnce = new JSONArray();
+        file = new File("C:/Users/694039/Desktop/sportlandhome/Sportland/apaviOnce.json");
+        for (int i = 0; i < allInfo.size(); i++) {
+            arrayOnce.put(allInfo.get(i).getText());
+        }
+        objectOnce.put("items", arrayOnce);
+        fw = new FileWriter(file);
+        fw.write(objectOnce.toString());
+        fw.flush();
     }
 }

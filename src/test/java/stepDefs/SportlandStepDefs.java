@@ -67,4 +67,9 @@ public class SportlandStepDefs {
     public void save_info_in_text() throws IOException {
         apaviPage.removeEuroAndCompare();
     }
+
+    @Then("save in json file")
+    public void save_info_in_json() throws Exception {
+        apaviPage.writeJsonSimpleDemo();
+    }
 }

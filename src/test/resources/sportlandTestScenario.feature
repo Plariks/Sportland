@@ -14,4 +14,5 @@ Feature: we need to find boys football shoes, and save information about them in
     Then check that all items has "NIKE" brand
     And check that all items is on sale
     And save information about shoes below 50eur in txt file
+    And save in json file
 
