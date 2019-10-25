@@ -23,6 +23,9 @@ public class ApaviPage {
 
     private Double cleanEur;
 
+    private JSONObject objectOnce = new JSONObject();
+    private JSONArray arrayOnce = new JSONArray();;
+
     private File file;
     private FileWriter fw;
 
@@ -102,8 +105,8 @@ public class ApaviPage {
     }
 
     public void writeJsonSimpleDemo() throws Exception {
-        JSONObject objectOnce = new JSONObject();
-        JSONArray arrayOnce = new JSONArray();
+//        JSONObject objectOnce = new JSONObject();
+//        JSONArray arrayOnce = new JSONArray();
         file = new File("C:/Users/694039/Desktop/sportlandhome/Sportland/apaviOnce.json");
         for (int i = 0; i < allInfo.size(); i++) {
             arrayOnce.put(allInfo.get(i).getText());
